@@ -64,11 +64,11 @@ namespace MimeParserBenchmark {
 						Console.WriteLine ("OpenPop:     Failed.    {0}", ex.Message);
 					}
 
-					//Console.WriteLine ("AE.Net.Mail:    {0}", MeasureAENetMail (stream, count).TotalSeconds);
+					Console.WriteLine ("AE.Net.Mail:    {0}", MeasureAENetMail (stream, count).TotalSeconds);
 
 					Console.WriteLine ("MailSystem.NET: {0}", MeasureMailSystemNET (stream, count).TotalSeconds);
 
-					//Console.WriteLine ("MIMER:          {0}", MeasureMIMER (stream, count).TotalSeconds);
+					Console.WriteLine ("MIMER:          {0}", MeasureMIMER (stream, count).TotalSeconds);
 				}
 
 				Console.WriteLine ();
