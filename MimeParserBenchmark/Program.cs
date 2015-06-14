@@ -34,6 +34,7 @@ namespace MimeParserBenchmark {
 		public static void Main (string[] args)
 		{
 			var messages = new [] { "startrek.msg", "xamarin3.msg" };
+			const int count = 1000; // the number of times to parse the message
 
 			foreach (var message in messages) {
 				using (var stream = new MemoryStream ()) {
@@ -50,38 +51,29 @@ namespace MimeParserBenchmark {
 					}
 					stream.Position = 0;
 
-					int count = (1024 * 1024 * 1024) / (int) stream.Length;
-
 					Console.WriteLine ("Parsing {0} ({1} iterations):", message, count);
 					
-					Console.WriteLine ("MimeKit:        {0}", MeasureMimeKit (stream, count).TotalSeconds);
-
-					// Note: OpenPop fails trying to base64 decode the attachments so I had to
-					// patch it.
-					try {
-						Console.WriteLine ("OpenPop:        {0}", MeasureOpenPOP (stream, count).TotalSeconds);
-					} catch (Exception ex) {
-						Console.WriteLine ("OpenPop:     Failed.    {0}", ex.Message);
-					}
-
-					Console.WriteLine ("AE.Net.Mail:    {0}", MeasureAENetMail (stream, count).TotalSeconds);
-
-					Console.WriteLine ("MailSystem.NET: {0}", MeasureMailSystemNET (stream, count).TotalSeconds);
-
-					Console.WriteLine ("MIMER:          {0}", MeasureMIMER (stream, count).TotalSeconds);
+					Console.WriteLine ("MimeKit:        {0} seconds", MeasureMimeKit (stream, count).TotalSeconds);
+					Console.WriteLine ("OpenPop:        {0} seconds", MeasureOpenPOP (stream, count).TotalSeconds);
+					Console.WriteLine ("AE.Net.Mail:    {0} seconds", MeasureAENetMail (stream, count).TotalSeconds);
+					Console.WriteLine ("MailSystem.NET: {0} seconds", MeasureMailSystemNET (stream, count).TotalSeconds);
+					Console.WriteLine ("MIMER:          {0} seconds", MeasureMIMER (stream, count).TotalSeconds);
 				}
 
 				Console.WriteLine ();
 			}
+
+			Console.ReadLine ();
 		}
 
 		static TimeSpan MeasureMimeKit (Stream stream, int count)
 		{
+			var parser = new MimeKit.MimeParser (Stream.Null);
 			var stopwatch = new Stopwatch ();
 
 			stopwatch.Start ();
 			for (int i = 0; i < count; i++) {
-				var parser = new MimeKit.MimeParser (stream, MimeKit.MimeFormat.Default, true);
+				parser.SetStream (stream, true);
 				parser.ParseMessage ();
 				stream.Position = 0;
 			}

@@ -1,4 +1,4 @@
-Return-Path: <nsb>
+Return-Path: <nsb@localhost>
 Received: by greenbush.bellcore.com (4.1/4.7)
 	id <AA12840> for nsb; Thu, 19 Sep 91 12:41:43 EDT
 Date: Thu, 19 Sep 91 12:41:43 EDT
@@ -1089,7 +1089,7 @@ JQqSdgrYH8fyVwX4sWBve2QpUojPblvVGHMc6NJB23edtSF6sfzcheFR2xSNIaTkHDvSHpJo
 0CK3jI33rIAAADs=
 
 --Where_No_Man_Has_Gone_Before
-Content-type: X-BE2; 12
+Content-type: APPLICATION/X-BE2
 COMMENT:  This is NOT a MIME-compliant content-type, but your software should be robust.
 
 \begindata{text, 269602880}
