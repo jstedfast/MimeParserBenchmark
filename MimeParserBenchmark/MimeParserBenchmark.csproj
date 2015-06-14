@@ -31,18 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="BouncyCastle">
-      <HintPath>..\packages\MimeKit.1.2.1.0\lib\net45\BouncyCastle.dll</HintPath>
-    </Reference>
-    <Reference Include="MimeKit">
-      <HintPath>..\packages\MimeKit.1.2.1.0\lib\net45\MimeKit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Security" />
-    <Reference Include="OpenPop">
-      <HintPath>..\packages\OpenPop.NET.2.0.6.1108\lib\net40\OpenPop.dll</HintPath>
-    </Reference>
     <Reference Include="MIMER">
       <HintPath>..\packages\MIMER.0.7.0\lib\MIMER.dll</HintPath>
     </Reference>
@@ -78,6 +69,15 @@
     </Reference>
     <Reference Include="ActiveUp.Net.WhoIs">
       <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.WhoIs.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1112\lib\net40\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle">
+      <HintPath>..\packages\MimeKit.1.2.4.0\lib\net45\BouncyCastle.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit">
+      <HintPath>..\packages\MimeKit.1.2.4.0\lib\net45\MimeKit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
