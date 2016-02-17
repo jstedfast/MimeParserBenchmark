@@ -54,6 +54,7 @@ namespace MimeParserBenchmark {
 					Console.WriteLine ("Parsing {0} ({1} iterations):", message, count);
 					
 					Console.WriteLine ("MimeKit:        {0} seconds", MeasureMimeKit (stream, count).TotalSeconds);
+					Console.WriteLine ("Mime4Net:       {0} seconds", MeasureMime4Net (stream, count).TotalSeconds);
 					Console.WriteLine ("OpenPop:        {0} seconds", MeasureOpenPOP (stream, count).TotalSeconds);
 					Console.WriteLine ("AE.Net.Mail:    {0} seconds", MeasureAENetMail (stream, count).TotalSeconds);
 					Console.WriteLine ("MailSystem.NET: {0} seconds", MeasureMailSystemNET (stream, count).TotalSeconds);
@@ -64,6 +65,20 @@ namespace MimeParserBenchmark {
 			}
 
 			Console.ReadLine ();
+		}
+
+		static TimeSpan MeasureMime4Net (Stream stream, int count)
+		{
+			var stopwatch = new Stopwatch ();
+
+			stopwatch.Start ();
+			for (int i = 0; i < count; i++) {
+				var message = new NI.Email.Mime.Message.MimeMessage (stream, false);
+				stream.Position = 0;
+			}
+			stopwatch.Stop ();
+
+			return stopwatch.Elapsed;
 		}
 
 		static TimeSpan MeasureMimeKit (Stream stream, int count)
