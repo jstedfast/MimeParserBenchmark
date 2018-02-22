@@ -25,143 +25,19 @@
 //
 
 using System;
-using System.IO;
-using System.Diagnostics;
+using BenchmarkDotNet.Running;
 
-namespace MimeParserBenchmark {
-	class Program
-	{
-		public static void Main (string[] args)
-		{
-			var messages = new [] { "startrek.msg", "xamarin3.msg" };
-			const int count = 1000; // the number of times to parse the message
+namespace MimeParserBenchmark
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var summary = BenchmarkRunner.Run<MimeParserBenchmarks>();
 
-			foreach (var message in messages) {
-				using (var stream = new MemoryStream ()) {
-					// Note: we copy into a memory stream to try and make things fair for
-					// MailSystem.NET which can only parse MemoryStreams or byte[] data.
-					using (var file = File.OpenRead (message)) {
-						// Note: convert to DOS line endings in case the benchmark
-						// is being run on Mac or Linux
-						using (var filtered = new MimeKit.IO.FilteredStream (stream)) {
-							filtered.Add (new MimeKit.IO.Filters.Unix2DosFilter ());
-							file.CopyTo (filtered);
-							filtered.Flush ();
-						}
-					}
-					stream.Position = 0;
+            Console.WriteLine("Benchmarks finished, press [Enter] to quit.");
 
-					Console.WriteLine ("Parsing {0} ({1} iterations):", message, count);
-					
-					Console.WriteLine ("MimeKit:        {0} seconds", MeasureMimeKit (stream, count).TotalSeconds);
-					Console.WriteLine ("Mime4Net:       {0} seconds", MeasureMime4Net (stream, count).TotalSeconds);
-					Console.WriteLine ("OpenPop:        {0} seconds", MeasureOpenPOP (stream, count).TotalSeconds);
-					Console.WriteLine ("AE.Net.Mail:    {0} seconds", MeasureAENetMail (stream, count).TotalSeconds);
-					Console.WriteLine ("MailSystem.NET: {0} seconds", MeasureMailSystemNET (stream, count).TotalSeconds);
-					Console.WriteLine ("MIMER:          {0} seconds", MeasureMIMER (stream, count).TotalSeconds);
-				}
-
-				Console.WriteLine ();
-			}
-
-			Console.ReadLine ();
-		}
-
-		static TimeSpan MeasureMime4Net (Stream stream, int count)
-		{
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				var message = new NI.Email.Mime.Message.MimeMessage (stream, false);
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-
-		static TimeSpan MeasureMimeKit (Stream stream, int count)
-		{
-			var parser = new MimeKit.MimeParser (Stream.Null);
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				parser.SetStream (stream, true);
-				parser.ParseMessage ();
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-
-		static TimeSpan MeasureOpenPOP (Stream stream, int count)
-		{
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				OpenPop.Mime.Message.Load (stream);
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-
-		class EndOfLineCriteriaStrategy : MIMER.IEndCriteriaStrategy
-		{
-			public bool IsEndReached (char[] data, int size)
-			{
-				return data[0] == '\n';
-			}
-		}
-
-		static TimeSpan MeasureMIMER (Stream stream, int count)
-		{
-			var eoln = new EndOfLineCriteriaStrategy ();
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				var reader = new MIMER.RFC822.MailReader ();
-				reader.Read (ref stream, eoln);
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-
-		static TimeSpan MeasureAENetMail (Stream stream, int count)
-		{
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				var message = new AE.Net.Mail.MailMessage ();
-				message.Load (stream, false, (int) stream.Length);
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-
-		static TimeSpan MeasureMailSystemNET (MemoryStream stream, int count)
-		{
-			var stopwatch = new Stopwatch ();
-
-			stopwatch.Start ();
-			for (int i = 0; i < count; i++) {
-				ActiveUp.Net.Mail.Parser.ParseMessage (stream);
-				stream.Position = 0;
-			}
-			stopwatch.Stop ();
-
-			return stopwatch.Elapsed;
-		}
-	}
+            Console.ReadLine();
+        }
+    }
 }
