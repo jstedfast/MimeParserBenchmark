@@ -31,8 +31,7 @@ using BenchmarkDotNet.Attributes;
 
 using MimeKit;
 
-namespace Benchmarks
-{
+namespace Benchmarks {
 	public class HeaderHeavyEmailBenchmarks
 	{
 		const string MessageAsString = @"Return-Path: <info@someserver>
