@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(TestFrameworks)'==''">net48</TargetFrameworks>
+    <DefineConstants Condition=" '$(MonoRuntime)' == 'true' ">$(DefineConstants);MONO</DefineConstants>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <IsPackable>false</IsPackable>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AE.Net.Mail" Version="1.7.10" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="Mail.dll" Version="3.0.21231.1234" />
+    <PackageReference Include="MailSystem.NET" Version="2.0.1" />
+    <PackageReference Include="MimeKit" Version="2.15.0" />
+    <PackageReference Include="NI.Email.Mime" Version="1.8.1" />
+    <PackageReference Include="OpenPop.NET" Version="2.0.6.1120" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="BenchmarkHelper.cs" />
+    <Compile Include="HeaderHeavyEmailBenchmarks.cs" />
+    <Compile Include="JwzMboxBenchmarks.cs" />
+    <Compile Include="LoopedInputStream.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="StarTrekEmailBenchmarks.cs" />
+    <Compile Include="Xamarin3EmailBenchmarks.cs" />
+  </ItemGroup>
+
+</Project>

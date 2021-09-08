@@ -2,23 +2,19 @@
 
 This project benchmarks various .NET MIME parsers for comparison purposes.
 
+## Package Versions
+
+|        Package        |     Version    |
+|---------------------- |---------------:|
+|               MimeKit | 2.15.0         |
+|    LimiLabs' Mail.dll | 3.0.21231.1234 |
+| NewtonIdeas' Mime4Net | 1.8.1          |
+|           AE.Net.Mail | 1.7.10         |
+|        MailSystem.NET | 2.0.1          |
+|           OpenPop.NET | 2.0.6.1120     |
+
 ## Results
 
-```
-Parsing startrek.msg (1000 iterations):
-MimeKit:        0.6989221 seconds
-OpenPop:        25.3056064 seconds
-AE.Net.Mail:    17.5971438 seconds
-MailSystem.NET: 26.3891218 seconds
-MIMER:          76.4538978 seconds
 
-Parsing xamarin3.msg (1000 iterations):
-MimeKit:        3.4215505 seconds
-OpenPop:        159.3308053 seconds
-AE.Net.Mail:    132.3044291 seconds
-MailSystem.NET: 133.5832078 seconds
-MIMER:          784.433441 seconds
-```
 
-How does your MIME parser compare?
-
+How does **your** MIME parser compare?
