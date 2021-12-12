@@ -43,7 +43,8 @@ namespace Benchmarks {
 				var parser = new MimeParser (stream, MimeFormat.Entity);
 
 				for (int i = 0; i < iterations; i++) {
-					parser.ParseMessage ();
+					var message = parser.ParseMessage ();
+					message.Dispose ();
 
 					stream.Position = 0;
 					parser.SetStream (stream, MimeFormat.Entity);
@@ -58,7 +59,8 @@ namespace Benchmarks {
 				var parser = new MimeParser (stream, MimeFormat.Entity, true);
 
 				for (int i = 0; i < iterations; i++) {
-					parser.ParseMessage ();
+					var message = parser.ParseMessage ();
+					message.Dispose ();
 
 					stream.Position = 0;
 					parser.SetStream (stream, MimeFormat.Entity, true);

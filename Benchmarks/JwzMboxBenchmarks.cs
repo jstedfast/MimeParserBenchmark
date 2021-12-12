@@ -44,7 +44,8 @@ namespace Benchmarks {
 					var parser = new MimeParser (looped, MimeFormat.Mbox);
 
 					while (!parser.IsEndOfStream) {
-						parser.ParseMessage ();
+						var message = parser.ParseMessage ();
+						message.Dispose ();
 					}
 				}
 			}
@@ -58,7 +59,8 @@ namespace Benchmarks {
 					var parser = new MimeParser (looped, MimeFormat.Mbox, true);
 
 					while (!parser.IsEndOfStream) {
-						parser.ParseMessage ();
+						var message = parser.ParseMessage ();
+						message.Dispose ();
 					}
 				}
 			}
