@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="AE.Net.Mail" Version="1.7.10" />
     <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
-    <PackageReference Include="Mail.dll" Version="3.0.24030.1216" />
+    <PackageReference Include="Mail.dll" Version="3.0.24129.1605" />
     <PackageReference Include="MailSystem.NET" Version="2.0.1" />
     <PackageReference Include="MimeKit" Version="3.6.1" />
     <PackageReference Include="NI.Email.Mime" Version="1.8.1" />
