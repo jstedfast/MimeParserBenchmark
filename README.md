@@ -6,8 +6,8 @@ This project benchmarks various .NET MIME parsers for comparison purposes.
 
 | Package                                                                | Version                                                                             |
 |-----------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:|
-| <a href="https://github.com/jstedfast/MimeKit">MimeKit</a>             | <a href="https://www.nuget.org/packages/MimeKit/3.0.0">3.0.0</a>                    |
-| <a href="https://www.limilabs.com/mail">LimiLabs' Mail.dll</a>         | <a href="https://www.nuget.org/packages/Mail.dll/3.0.21294.1630">3.0.21294.1630</a> |
+| <a href="https://github.com/jstedfast/MimeKit">MimeKit</a>             | <a href="https://www.nuget.org/packages/MimeKit/4.12.0">4.12.0</a>                    |
+| <a href="https://www.limilabs.com/mail">LimiLabs' Mail.dll</a>         | <a href="https://www.nuget.org/packages/Mail.dll/3.0.25121.1408">3.0.25121.1408</a> |
 | <a href="http://www.mime4.net/">Mime4Net</a>                           | <a href="https://www.nuget.org/packages/NI.Email.Mime/1.8.1">1.8.1</a>              |
 | <a href="https://github.com/andyedinborough/aenetmail">AE.Net.Mail</a> | <a href="https://www.nuget.org/packages/AE.Net.Mail/1.7.10">1.7.10</a>              |
 | <a href="https://github.com/pmengal/MailSystem.NET">MailSystem.NET</a> | <a href="https://www.nuget.org/packages/MailSystem.NET/2.0.1">2.0.1</a>             |
@@ -15,10 +15,11 @@ This project benchmarks various .NET MIME parsers for comparison purposes.
 
 ## Runtime
 
-```
+```text
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26100.3775)
 Intel Core i7-9700 CPU 3.00GHz, 1 CPU, 8 logical and 8 physical cores
-  [Host]     : .NET Framework 4.8 (4.8.4420.0), X64 RyuJIT
-  DefaultJob : .NET Framework 4.8 (4.8.4420.0), X64 RyuJIT
+  [Host]     : .NET Framework 4.8.1 (4.8.9290.0), X64 RyuJIT VectorSize=256
+  DefaultJob : .NET Framework 4.8.1 (4.8.9290.0), X64 RyuJIT VectorSize=256
 ```
 
 ## Results
@@ -27,47 +28,48 @@ Intel Core i7-9700 CPU 3.00GHz, 1 CPU, 8 logical and 8 physical cores
 
 In this benchmark, each library is used to parse an in-memory email message that is almost all headers 1,000 times.
 
-|            Method |        Mean |     Error |    StdDev |
+| Method            | Mean        | Error     | StdDev    |
 |------------------ |------------:|----------:|----------:|
-|           MimeKit |    30.22 ms |  0.207 ms |  0.183 ms |
-| MimeKitPersistent |    30.08 ms |  0.311 ms |  0.276 ms |
-|          LimiLabs |   629.92 ms |  3.252 ms |  2.883 ms |
-|          Mime4Net |   517.56 ms |  3.442 ms |  3.051 ms |
-|           OpenPOP |   353.23 ms |  4.355 ms |  4.074 ms |
-|         AENetMail | 2,862.46 ms | 17.677 ms | 16.535 ms |
-|     MailSystemNET | 1,911.98 ms | 11.197 ms | 10.474 ms |
+| MimeKit           |    30.28 ms |  0.229 ms |  0.215 ms |
+| MimeKitPersistent |    30.53 ms |  0.546 ms |  0.484 ms |
+| LimiLabs          |   729.34 ms |  7.569 ms |  6.321 ms |
+| Mime4Net          |   573.89 ms |  9.861 ms | 10.551 ms |
+| OpenPOP           |   399.10 ms |  7.696 ms |  8.554 ms |
+| AENetMail         | 2,912.24 ms | 57.274 ms | 70.338 ms |
+| MailSystemNET     | 1,954.23 ms | 25.525 ms | 22.627 ms |
 
 ### JwzMboxBenchmark
 
 In this benchmark, each library is used to parse the `jwz.mbox` Unix mbox spool from disk 10 times.
 
-|            Method |       Mean |   Error |  StdDev |
-|------------------ |-----------:|--------:|--------:|
-|           MimeKit |   171.3 ms | 0.87 ms | 0.77 ms |
-| MimeKitPersistent |   160.1 ms | 1.50 ms | 1.33 ms |
-|          LimiLabs | 1,148.3 ms | 8.28 ms | 7.75 ms |
+| Method            | Mean       | Error    | StdDev   |
+|------------------ |-----------:|---------:|---------:|
+| MimeKit           |   177.1 ms |  2.52 ms |  2.36 ms |
+| MimeKitPersistent |   163.7 ms |  2.92 ms |  4.64 ms |
+| LimiLabs          | 1,166.2 ms | 23.01 ms | 21.52 ms |
 
 ### StarTrekEmailBenchmark
 
 In this benchmark, each library is used to parse `startrek.eml` from disk 1,000 times.
 
-|            Method |        Mean |    Error |   StdDev |
-|------------------ |------------:|---------:|---------:|
-|           MimeKit |    218.6 ms |  1.95 ms |  1.73 ms |
-| MimeKitPersistent |    205.5 ms |  1.72 ms |  1.61 ms |
-|          LimiLabs |  2,318.0 ms | 12.37 ms | 10.96 ms |
-|          Mime4Net | 10,726.6 ms | 38.19 ms | 35.73 ms |
-|           OpenPOP |          NA |       NA |       NA |
-|         AENetMail |  3,897.4 ms | 74.18 ms | 69.39 ms |
-|     MailSystemNET |  8,928.0 ms | 29.92 ms | 26.53 ms |
+| Method            | Mean        | Error     | StdDev    |
+|------------------ |------------:|----------:|----------:|
+| MimeKit           |    216.6 ms |   4.33 ms |   5.48 ms |
+| MimeKitPersistent |    195.7 ms |   3.91 ms |   5.48 ms |
+| LimiLabs          |  5,776.4 ms | 110.47 ms | 118.20 ms |
+| Mime4Net          | 11,114.1 ms |  85.75 ms |  76.01 ms |
+| OpenPOP           |          NA |        NA |        NA |
+| AENetMail         |  4,018.5 ms |  26.65 ms |  20.80 ms |
+| MailSystemNET     |  9,528.9 ms | 127.01 ms |  99.16 ms |
 
 Notes:
+
 * MailSystem.NET's parser only supports parsing from byte[] or MemoryStream, so in this test,
   MailSystem.NET is allowed to "cheat" by parsing an in-memory version of the message instead
   of being forced to parse from disk in each iteration.
 * OpenPOP.NET fails to parse this message with the following exception:
 
-```
+```text
 System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.ArgumentException: Media Type must be in the format type "/" subtype
 Parameter name: mediaType
    at OpenPop.Mime.Header.HeaderFieldParser.cleanMediaType(String mediaType)
@@ -95,18 +97,18 @@ Parameter name: mediaType
 
 In this benchmark, each library is used to parse `xamarin3.eml` from disk 1,000 times.
 
-
-|            Method |     Mean |    Error |   StdDev |
-|------------------ |---------:|---------:|---------:|
-|           MimeKit |  1.629 s | 0.0168 s | 0.0157 s |
-| MimeKitPersistent |  1.344 s | 0.0086 s | 0.0080 s |
-|          LimiLabs | 12.503 s | 0.0421 s | 0.0394 s |
-|          Mime4Net | 85.075 s | 0.4774 s | 0.3987 s |
-|           OpenPOP | 80.162 s | 0.6835 s | 0.6059 s |
-|         AENetMail | 30.925 s | 0.2161 s | 0.1915 s |
-|     MailSystemNET | 48.179 s | 0.6107 s | 0.5713 s |
+| Method            | Mean     | Error    | StdDev   | Median   |
+|------------------ |---------:|---------:|---------:|---------:|
+| MimeKit           |  1.693 s | 0.0316 s | 0.0400 s |  1.679 s |
+| MimeKitPersistent |  1.314 s | 0.0201 s | 0.0188 s |  1.312 s |
+| LimiLabs          | 14.392 s | 0.1196 s | 0.1060 s | 14.362 s |
+| Mime4Net          | 90.029 s | 1.0404 s | 0.9732 s | 90.027 s |
+| OpenPOP           | 78.548 s | 1.0670 s | 0.9981 s | 78.792 s |
+| AENetMail         | 31.338 s | 0.5670 s | 0.6529 s | 31.322 s |
+| MailSystemNET     | 54.039 s | 1.0752 s | 3.1363 s | 52.791 s |
 
 Notes:
+
 * MailSystem.NET's parser only supports parsing from byte[] or MemoryStream, so in this test,
   MailSystem.NET is allowed to "cheat" by parsing an in-memory version of the message instead
   of being forced to parse from disk in each iteration.
